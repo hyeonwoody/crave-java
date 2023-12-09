@@ -2,7 +2,9 @@
 package com.toyproject.crave.controller;
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toyproject.crave.service.NamuCenter;
 import jakarta.servlet.http.HttpServletRequest;
+import libs.ThreadClass;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,8 +30,6 @@ public class ConfigController {
 
     @PutMapping("/main")
     public ResponseEntity<String> ia (HttpServletRequest request) {
-
-
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -41,8 +41,11 @@ public class ConfigController {
 
             System.out.println(config.getHow());
 
+            NamuCenter namu = new NamuCenter(config.getOrigin(), config.getDestination(), -1, config.getNumStage());
 
-
+            if (namu.startThread())
+                namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
+            
         } catch (IOException e) {
             e.printStackTrace();
 
