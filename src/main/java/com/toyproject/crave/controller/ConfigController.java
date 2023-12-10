@@ -29,8 +29,11 @@ public class ConfigController {
     }
 
     @PutMapping("/main")
-    public ResponseEntity<String> ia (HttpServletRequest request) {
+    public ResponseEntity<Integer> ia (HttpServletRequest request) {
         BufferedReader reader = null;
+
+        int ret = 1;
+
         try {
             reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
@@ -41,15 +44,25 @@ public class ConfigController {
 
             System.out.println(config.getHow());
 
-            NamuCenter namu = new NamuCenter(config.getOrigin(), config.getDestination(), -1, config.getNumStage());
+            if (config.areMembersNotNull()){
+                NamuCenter namu = new NamuCenter(config.getOrigin(), config.getDestination(), -1, config.getNumStage());
 
-            if (namu.startThread())
-                namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
-            
+                if (namu.startThread())
+                    namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
+            }
+            else {
+                ret = -2;
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        return ResponseEntity.ok(request.getRemoteAddr());
+        System.out.println("Result "+ ret);
+        return ResponseEntity.ok(ret);
     }
+
+
+
 }

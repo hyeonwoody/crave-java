@@ -37,4 +37,11 @@ public class ConfigDTO {
     @JsonIgnore
     private String inputDropDown;
 
+    public boolean areMembersNotNull() {
+        return scope != -1 && algorithm != -1 && method != -1 &&
+                !origin.isEmpty() &&
+                !destination.isEmpty() &&
+                how != -1 && numStage != -1;
+    }
+
 }
