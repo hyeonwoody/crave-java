@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+
+
 public class ConfigDTO {
 
     @Getter
@@ -44,4 +46,6 @@ public class ConfigDTO {
                 how != -1 && numStage != -1;
     }
 
+
 }
+

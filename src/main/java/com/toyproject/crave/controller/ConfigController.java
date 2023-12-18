@@ -32,7 +32,7 @@ public class ConfigController {
     public ResponseEntity<Integer> ia (HttpServletRequest request) {
         BufferedReader reader = null;
 
-        int ret = 1;
+        int ret = -1;
 
         try {
             reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -45,8 +45,9 @@ public class ConfigController {
             System.out.println(config.getHow());
 
             if (config.areMembersNotNull()){
-                NamuCenter namu = new NamuCenter(config.getOrigin(), config.getDestination(), -1, config.getNumStage());
-
+                NamuCenter namu = new NamuCenter(config);
+                ret = namu.getPort();
+                System.out.println("11Result "+ ret);
                 if (namu.startThread())
                     namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
             }

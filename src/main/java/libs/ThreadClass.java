@@ -33,7 +33,7 @@ public abstract class ThreadClass extends Thread{
         this.mThread = null;
         this.mName = name;
         this.mMutex = new ReentrantLock();
-
+        this.mThreadStatus = EThreadStatus.THREAD_INACTIVE;
         if (name != null)
             this.mName = name.substring(0, Math.min(name.length(), THREAD_NAME_MAX - 1));
     }
