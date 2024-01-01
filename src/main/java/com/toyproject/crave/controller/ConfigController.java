@@ -20,13 +20,45 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/config")
 public class ConfigController {
+    public enum EScope{
+        PERSONONLY,
+        ALL
+    }
+    public enum EAlgorithmType {
+        DFS,
+        BFS
+    }
+    public enum EStepType {
+        FRONTSTEP,
+        BACKSTEP
+    }
 
+    public enum EMethodType {
+        FRONT,
+        FRONTANDBACK,
+        BACK
+    }
+    static ConfigDTO config;
+
+    public ConfigController (){
+        config = new ConfigDTO();
+    }
     public ResponseEntity<String> ip (HttpServletRequest request) {
         // 요청을 보낸 클라이언트의 IP주소를 반환합니다.
         System.out.println(request.getRemoteAddr());
         System.out.println("fsdfdsf");
         return ResponseEntity.ok(request.getRemoteAddr());
     }
+
+    public static int getMethod(){
+        return config.getMethod();
+    }
+
+    public static String getDestination(){
+        return config.getDestination();
+    }
+
+    public static int getStage() {return config.getNumStage();}
 
     @PutMapping("/main")
     public ResponseEntity<Integer> ia (HttpServletRequest request) {
@@ -40,7 +72,7 @@ public class ConfigController {
             System.out.println(requestBody);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            ConfigDTO config = objectMapper.readValue(requestBody, ConfigDTO.class);
+            config = objectMapper.readValue(requestBody, ConfigDTO.class);
 
             System.out.println(config.getHow());
 

@@ -1,9 +1,13 @@
 package com.toyproject.crave.service;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
+import com.toyproject.crave.service.namuStep.FrontStep;
+import com.toyproject.crave.service.NamuStep;
 import libs.ThreadClass;
-import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NamuCenter extends ThreadClass {
@@ -17,6 +21,7 @@ public class NamuCenter extends ThreadClass {
     private int nRoute;
 
     private ConfigDTO config;
+
 
     private FrontStep frontStep;
 
@@ -36,7 +41,7 @@ public class NamuCenter extends ThreadClass {
         System.out.println("THread");
         switch (config.getMethod()) {
             case 0: //FRONT
-                frontStep = new FrontStep(this.config.getOrigin());
+                frontStep = new FrontStep(this.config);
                 if (frontStep.startThread())
                     frontStep.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
                 break;
@@ -47,9 +52,16 @@ public class NamuCenter extends ThreadClass {
         }
         while (getMThreadStatus() == EThreadStatus.THREAD_ACTIVE)
         {
-            int a = 0;
+            if (!NamuStep.foundRoute.isEmpty()) {
+                Deque<String> tmp = new LinkedList<>(NamuStep.foundRoute.remove(0));
 
-            //final check
+                System.out.println("Elements in foundRoute:");
+                while (!tmp.isEmpty()) {
+                    System.out.println(tmp.removeFirst());
+                }
+                tmp.clear();
+                System.out.println("FOUND");
+            }
         }
     }
 }

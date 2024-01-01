@@ -4,13 +4,14 @@ package libs;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class ThreadClass extends Thread{
 
 
-    protected abstract void threadMain();
+    protected abstract void threadMain() throws InterruptedException, UnsupportedEncodingException;
 
     public enum EThreadStatus {
         THREAD_INACTIVE,
@@ -40,13 +41,20 @@ public abstract class ThreadClass extends Thread{
 
 
     public void run(){
-        threadMain();
+        try {
+            threadMain();
+        } catch (InterruptedException e) {
+            e.printStackTrace(); // Handle the interruption exception as needed
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean startThread(){
         if (mThread == null || !mThread.isAlive()){
             try {
                 mThread = new Thread(this::run);
+                mThread.setName(mName);
                 mThread.start();
             }
             catch (Exception e) {
