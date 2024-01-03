@@ -38,6 +38,13 @@ public class ConfigController {
         FRONTANDBACK,
         BACK
     }
+
+    public enum EHowType {
+        EXACT,
+        MINIMUM,
+        MAXIMUM,
+        NONE
+    }
     static ConfigDTO config;
 
     public ConfigController (){
@@ -62,19 +69,18 @@ public class ConfigController {
 
     @PutMapping("/main")
     public ResponseEntity<Integer> ia (HttpServletRequest request) {
-        BufferedReader reader = null;
+
 
         int ret = -1;
 
         try {
-            reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
             System.out.println(requestBody);
 
             ObjectMapper objectMapper = new ObjectMapper();
             config = objectMapper.readValue(requestBody, ConfigDTO.class);
-
-            System.out.println(config.getHow());
 
             if (config.areMembersNotNull()){
                 NamuCenter namu = new NamuCenter(config);
@@ -89,9 +95,7 @@ public class ConfigController {
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
-        System.out.println("Result "+ ret);
         return ResponseEntity.ok(ret);
     }
 }

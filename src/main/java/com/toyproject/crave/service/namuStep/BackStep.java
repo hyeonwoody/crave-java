@@ -4,6 +4,7 @@ import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 import com.toyproject.crave.service.NamuStep;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -74,7 +75,7 @@ public class BackStep extends NamuStep {
     }
 
     @Override
-    protected void threadMain() throws InterruptedException, UnsupportedEncodingException {
+    protected void threadMain() throws InterruptedException, IOException {
         System.out.println("Front start");
         System.out.println(currentTarget.getName());
         while (getMThreadStatus() == EThreadStatus.THREAD_ACTIVE){

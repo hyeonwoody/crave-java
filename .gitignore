@@ -53,5 +53,7 @@ out/
 ### Test ###
 /src/test/*
 
+### special scripts
+scripts/*
 app.sh
 react.log

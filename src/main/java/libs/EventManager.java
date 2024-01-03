@@ -9,7 +9,8 @@ public class EventManager {
         ERROR,
         INFO,
         WARNING,
-        SKIPABLE
+        SKIPABLE,
+        DEBUG
     }
 
     private static void LogExecute (int level, String session, String func, int outputIndex, String time, String buffer){

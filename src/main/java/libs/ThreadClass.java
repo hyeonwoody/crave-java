@@ -4,6 +4,7 @@ package libs;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -11,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class ThreadClass extends Thread{
 
 
-    protected abstract void threadMain() throws InterruptedException, UnsupportedEncodingException;
+    protected abstract void threadMain() throws InterruptedException, IOException;
 
     public enum EThreadStatus {
         THREAD_INACTIVE,
@@ -46,6 +47,8 @@ public abstract class ThreadClass extends Thread{
         } catch (InterruptedException e) {
             e.printStackTrace(); // Handle the interruption exception as needed
         } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

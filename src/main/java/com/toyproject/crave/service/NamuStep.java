@@ -26,7 +26,7 @@ public abstract class NamuStep extends ThreadClass{
 
     public NamuPageDTO currentTarget;
     public Map<String, String> historyMap;
-    public static ArrayList<Deque<String>> foundRoute = new ArrayList<>();
+    public ArrayList<Deque<String>> foundRoute = new ArrayList<>();
 
 
     protected ConfigDTO config;
@@ -34,10 +34,13 @@ public abstract class NamuStep extends ThreadClass{
     public Algorithm algorithm;
     public Method method;
 
+    private static int count = 0;
+
 
     public NamuStep(String stepMethod, ConfigDTO config) {
         super(stepMethod);
         this.config = config;
+        count++;
         this.historyMap = new HashMap<>();
         if (this.config.getScope() == ConfigController.EScope.PERSONONLY.ordinal()){
             scope = new PersonOnly();
@@ -56,12 +59,14 @@ public abstract class NamuStep extends ThreadClass{
             method = new Front();
         }
 
+
+
     }
     public long duration() {
         Random rand = new Random();
         long min = 900;
         long max = 1550;
-        return rand.nextLong() % (max - min + 1) + min;
+        return rand.nextLong() % (max - min + 1) + min * count;
     }
 
 

@@ -131,7 +131,7 @@ public class FrontStep extends NamuStep {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            printCurrent();
+            //printCurrent();
 
             String uri = makeUri(currentTarget.getName());
             String html = getHtml(uri);
@@ -139,7 +139,7 @@ public class FrontStep extends NamuStep {
             if (blockDetection(html))
             {
                 //eventManager logOutput
-                System.out.println("block DETECT");
+                EventManager.LogOutput(EventManager.LOG_LEVEL.ERROR.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Block Detected");
                 continue;
             }
             if (scope.validation(html)){
