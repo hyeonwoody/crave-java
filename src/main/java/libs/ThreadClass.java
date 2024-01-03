@@ -23,7 +23,7 @@ public abstract class ThreadClass extends Thread{
     private static final int THREAD_NAME_MAX = 16;
 
     private Thread mThread;
-    private String mName;
+    protected String mName;
     private Lock mMutex = new ReentrantLock();
 
     @Setter

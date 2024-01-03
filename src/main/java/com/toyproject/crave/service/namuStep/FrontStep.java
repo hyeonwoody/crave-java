@@ -4,6 +4,7 @@ import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 import com.toyproject.crave.controller.ConfigController;
 import com.toyproject.crave.service.NamuStep;
+import libs.EventManager;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -120,7 +121,7 @@ public class FrontStep extends NamuStep {
         return prefix + name;
     }
     protected void printCurrent(){
-        System.out.println(currentTarget.getName() +": " + "(" + currentTarget.getStage() + ")");
+        EventManager.LogOutput(EventManager.LOG_LEVEL.SKIPABLE.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "%s: (%d)", currentTarget.getName(), currentTarget.getStage());
     }
     @Override
     protected void threadMain() throws InterruptedException, UnsupportedEncodingException {

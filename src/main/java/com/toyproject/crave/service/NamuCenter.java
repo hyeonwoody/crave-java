@@ -3,6 +3,8 @@ package com.toyproject.crave.service;
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.service.namuStep.FrontStep;
 import com.toyproject.crave.service.NamuStep;
+import jdk.jfr.Event;
+import libs.EventManager;
 import libs.ThreadClass;
 
 import java.util.ArrayList;
@@ -55,11 +57,10 @@ public class NamuCenter extends ThreadClass {
             if (!NamuStep.foundRoute.isEmpty()) {
                 Deque<String> tmp = new LinkedList<>(NamuStep.foundRoute.remove(0));
 
-                System.out.println("Elements in foundRoute:");
+                EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : ");
                 for (String element : tmp)
-                    System.out.println(element);
+                    EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : %s", element);
                 finalResult.add(new LinkedList<>(tmp));
-                System.out.println("FOUND");
             }
         }
     }
