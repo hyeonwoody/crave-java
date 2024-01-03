@@ -25,7 +25,7 @@ public class NamuCenter extends ThreadClass {
 
     private FrontStep frontStep;
 
-    private List<List<String>> finalResult;
+    private List<List<String>> finalResult = new ArrayList<>();
 
     public NamuCenter(ConfigDTO config) {
         super("NamuCenter");
@@ -56,10 +56,9 @@ public class NamuCenter extends ThreadClass {
                 Deque<String> tmp = new LinkedList<>(NamuStep.foundRoute.remove(0));
 
                 System.out.println("Elements in foundRoute:");
-                while (!tmp.isEmpty()) {
-                    System.out.println(tmp.removeFirst());
-                }
-                tmp.clear();
+                for (String element : tmp)
+                    System.out.println(element);
+                finalResult.add(new LinkedList<>(tmp));
                 System.out.println("FOUND");
             }
         }

@@ -79,7 +79,6 @@ public class ConfigController {
             if (config.areMembersNotNull()){
                 NamuCenter namu = new NamuCenter(config);
                 ret = namu.getPort();
-                System.out.println("11Result "+ ret);
                 if (namu.startThread())
                     namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
             }
@@ -95,7 +94,4 @@ public class ConfigController {
         System.out.println("Result "+ ret);
         return ResponseEntity.ok(ret);
     }
-
-
-
 }

@@ -6,4 +6,6 @@ import java.io.UnsupportedEncodingException;
 
 public interface Algorithm {
     abstract NamuPageDTO moveTarget(NamuPageDTO currentTarget) throws UnsupportedEncodingException;
+
+    abstract NamuPageDTO justMoveTarget();
 }

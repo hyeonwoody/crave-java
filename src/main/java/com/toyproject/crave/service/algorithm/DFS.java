@@ -9,4 +9,9 @@ public class DFS implements Algorithm {
         NamuPageDTO tmp = currentTarget;
         return tmp;
     }
+
+    @Override
+    public NamuPageDTO justMoveTarget() {
+        return null;
+    }
 }

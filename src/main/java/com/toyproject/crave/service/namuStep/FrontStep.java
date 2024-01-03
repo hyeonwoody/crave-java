@@ -24,6 +24,20 @@ public class FrontStep extends NamuStep {
         currentTarget.setStage(0);
     }
 
+    protected boolean resultIsDate (String result){
+        Pattern datePattern = Pattern.compile("((\\d{4}년)?(\\d{1,2}월)?(\\d{1,2}일)?)");
+        if (datePattern.matcher(result).matches()) {
+            return true;
+        }
+
+        // Pattern for date with space in the format: (MM월)? (dd일)?
+        Pattern dateWithSpacePattern = Pattern.compile("(\\d{1,2}월)? (\\d{1,2}일)?");
+        if (dateWithSpacePattern.matcher(result).matches()) {
+            return true;
+        }
+
+        return false;
+    }
 
     protected boolean resultIsDestionation(String result){
         if (config.getMethod() == ConfigController.EMethodType.FRONT.ordinal())
@@ -32,21 +46,37 @@ public class FrontStep extends NamuStep {
     }
 
     @Override
-    protected void insertPage (String result){
-        if (!historyMap.containsKey(result)
-            &&!result.contains("분류")
-                &&!result.contains("/")
-                &&!result.contains("&")
-                &&!result.contains("?")
-                &&!result.equals(currentTarget.getName())
-            ) {
-            historyMap.put(result, currentTarget.getName());
-            NamuPageDTO namuPage = new NamuPageDTO(result);
-            namuPage.setStage(currentTarget.getStage()+1);
-            currentTarget.next.add(namuPage);
-            namuPage.prev.add(currentTarget);
-            namuPage.setTmp(currentTarget);
+    protected void insertPage (String result, String text){
+        if (resultIsDestionation(result)){
+            Deque<String> route = new ArrayDeque<>();
+            route = method.createRoute(currentTarget);
+            route.addLast(result);
+            foundRoute.add(route);
+            currentTarget = algorithm.justMoveTarget();
+            return;
         }
+        if (historyMap.containsKey(result)
+            ||result.contains("분류")
+                ||result.contains("/")
+                ||result.contains("&")
+                ||result.contains("?")
+                ||result.equals(currentTarget.getName())
+            ) {
+            return;
+        }
+
+        if (resultIsDate(result)){
+            return;
+        }
+
+        historyMap.put(result, currentTarget.getName());
+        NamuPageDTO namuPage = new NamuPageDTO(result);
+        namuPage.setDisplayName(text);
+        namuPage.setStage(currentTarget.getStage()+1);
+        currentTarget.next.add(namuPage);
+        namuPage.prev.add(currentTarget);
+        namuPage.setTmp(currentTarget);
+        return;
     }
 
 
@@ -54,16 +84,19 @@ public class FrontStep extends NamuStep {
     protected Boolean processHtmlForResults (String html){
         MatchResult match;
         String input;
+        String text;
         String decodedString = "";
 
-        Pattern hrefRegex = Pattern.compile("href=['\"]/w/([^'\"]*)['\"]");
+        Pattern hrefRegex = Pattern.compile("<a[^>]*\\s*href=['\"]/w/([^'\"]*)['\"][^>]*>(.*?)<\\/a>");
+        Matcher matcher = hrefRegex.matcher(html);
         Matcher searchMatcher = hrefRegex.matcher(html);
 
         while (searchMatcher.find()){
             match = searchMatcher.toMatchResult();
 
-            if (match.groupCount() == 1){
+            if (0 < match.groupCount() && match.groupCount() <= 2){
                 input = match.group(1);
+                text = match.group(2);
                 StringBuilder resultBuilder = new StringBuilder();
                 try {
                     decodedString = URLDecoder.decode(input, StandardCharsets.UTF_8.name());
@@ -75,7 +108,7 @@ public class FrontStep extends NamuStep {
                 int indexOfHash = decodedString.indexOf('#');
                 String result = (indexOfHash != -1) ? decodedString.substring(0, indexOfHash) : decodedString;
 
-                insertPage (result);
+                insertPage (result, text);
             }
             searchMatcher.region(match.end(), html.length());
         }
@@ -86,34 +119,9 @@ public class FrontStep extends NamuStep {
         final String prefix = "https://namu.wiki/w/";
         return prefix + name;
     }
-
-    protected void moveTarget() throws UnsupportedEncodingException {
-        currentTarget = algorithm.moveTarget(currentTarget);
+    protected void printCurrent(){
+        System.out.println(currentTarget.getName() +": " + "(" + currentTarget.getStage() + ")");
     }
-
-    public void routine() throws UnsupportedEncodingException {
-        if (resultIsDestionation(currentTarget.getName())){
-            NamuPageDTO tmp = currentTarget;
-            Deque<String> route = new ArrayDeque<>();
-            route = method.createRoute(currentTarget);
-
-            foundRoute.add(route);
-            return;
-        }
-        String uri = makeUri(currentTarget.getName());
-        String html = getHtml(uri);
-
-        if (blockDetection(html))
-        {
-            //eventManager logOutput
-            System.out.println("block DETECT");
-            return;
-        }
-        if (scope.validation(html)){
-            processHtmlForResults (html);
-        }
-    }
-
     @Override
     protected void threadMain() throws InterruptedException, UnsupportedEncodingException {
         while (getMThreadStatus() == EThreadStatus.THREAD_ACTIVE){
@@ -122,8 +130,21 @@ public class FrontStep extends NamuStep {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            routine();
-            moveTarget();
+            printCurrent();
+
+            String uri = makeUri(currentTarget.getName());
+            String html = getHtml(uri);
+
+            if (blockDetection(html))
+            {
+                //eventManager logOutput
+                System.out.println("block DETECT");
+                continue;
+            }
+            if (scope.validation(html)){
+                processHtmlForResults (html);
+            }
+            currentTarget = algorithm.moveTarget(currentTarget);
         }
     }
 }

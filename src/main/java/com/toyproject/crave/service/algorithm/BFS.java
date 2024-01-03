@@ -15,13 +15,16 @@ public class BFS implements Algorithm {
 
     @Override
     public NamuPageDTO moveTarget(NamuPageDTO currentTarget) {
+        if (currentTarget.getTmp() != null){
+            currentTarget.getTmp().incrementNextIndex();
+        }
         nextTarget.addAll(currentTarget.next);
-        System.out.println("Size before poll: " + nextTarget.size());
-
         NamuPageDTO tmp = nextTarget.poll();
-
-        System.out.println("Size after poll: " + nextTarget.size());
-
         return tmp;
+    }
+
+    @Override
+    public NamuPageDTO justMoveTarget() {
+        return nextTarget.poll();
     }
 }

@@ -42,7 +42,7 @@ public class BackStep extends NamuStep {
                 System.out.println(decodedString);
                 int indexOfHash = decodedString.indexOf('#');
                 String result = (indexOfHash != -1) ? decodedString.substring(0, indexOfHash) : decodedString;
-                insertPage (result);
+                insertPage (result, result);
             }
             searchMatcher.region(match.end(), html.length());
         }
@@ -61,7 +61,7 @@ public class BackStep extends NamuStep {
         return false;
     }
 
-    protected void insertPage(String result) {
+    protected void insertPage(String result, String text) {
         NamuPageDTO namuPage = new NamuPageDTO(result);
         currentTarget.prev.add(namuPage);
         namuPage.next.add(currentTarget);

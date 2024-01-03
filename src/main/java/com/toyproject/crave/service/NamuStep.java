@@ -66,19 +66,19 @@ public abstract class NamuStep extends ThreadClass{
 
 
 
-    protected abstract void insertPage (String result);
+    protected abstract void insertPage (String result, String text);
     protected abstract Boolean processHtmlForResults(String html);
 
     protected abstract String makeUri(String name);
 
     public boolean blockDetection(String html) {
-        System.out.println(html);
         return html.contains("<h1>비정상");
     }
     public String getHtml(String uri) throws UnsupportedEncodingException {
 
         try {
             uri = uri.replaceAll(" ", "%20").replaceAll("'", "%27");
+
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(uri))
