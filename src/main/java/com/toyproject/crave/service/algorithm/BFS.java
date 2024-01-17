@@ -19,6 +19,7 @@ public class BFS implements Algorithm {
             currentTarget.getTmp().incrementNextIndex();
         }
         nextTarget.addAll(currentTarget.next);
+        currentTarget.next.clear();
         NamuPageDTO tmp = nextTarget.poll();
         return tmp;
     }

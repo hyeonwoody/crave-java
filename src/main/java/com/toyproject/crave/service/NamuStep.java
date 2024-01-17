@@ -80,9 +80,8 @@ public abstract class NamuStep extends ThreadClass{
         return html.contains("<h1>비정상");
     }
     public String getHtml(String uri) throws UnsupportedEncodingException {
-
         try {
-            uri = uri.replaceAll(" ", "%20").replaceAll("'", "%27");
+
 
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -92,6 +91,7 @@ public abstract class NamuStep extends ThreadClass{
             return response.body();
         }
         catch (IOException | InterruptedException | IllegalArgumentException e) {
+            System.out.println(uri);
             throw new RuntimeException(e);
         }
     }

@@ -59,8 +59,13 @@ public class FrontStep extends NamuStep {
         if (historyMap.containsKey(result)
             ||result.contains("분류")
                 ||result.contains("/")
-                ||result.contains("&")
+                ||result.contains("대한민국")
+                ||result.contains("\"")
                 ||result.contains("?")
+                ||result.contains("!")
+                ||result.contains("[")
+                ||result.contains("&")
+                ||result.contains("/")
                 ||result.equals(currentTarget.getName())
             ) {
             return;
@@ -75,7 +80,6 @@ public class FrontStep extends NamuStep {
         namuPage.setDisplayName(text);
         namuPage.setStage(currentTarget.getStage()+1);
         currentTarget.next.add(namuPage);
-        namuPage.prev.add(currentTarget);
         namuPage.setTmp(currentTarget);
         return;
     }
@@ -117,7 +121,17 @@ public class FrontStep extends NamuStep {
     }
     @Override
     protected String makeUri(String name){
+        name = name.replaceAll("%", "%25")
+                .replaceAll(" ", "%20")
+                .replaceAll("&", "%26")
+                .replaceAll("'", "%27")
+                .replaceAll("/", "%2F")
+                .replaceAll(":", "%3A")
+                .replaceAll("<", "%3C")
+                .replaceAll(">", "%3E")
+                .replaceAll("]", "%5D");
         final String prefix = "https://namu.wiki/w/";
+
         return prefix + name;
     }
     protected void printCurrent(){

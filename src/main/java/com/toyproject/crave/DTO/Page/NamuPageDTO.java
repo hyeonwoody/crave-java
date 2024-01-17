@@ -23,10 +23,7 @@ public class NamuPageDTO {
     @Getter
     private int nextIndex;
 
-    @Setter
-    public List<NamuPageDTO> prev;
-    @Getter
-    private int prevIndex;
+
     @Getter
     @Setter
     private NamuPageDTO tmp;
@@ -35,9 +32,7 @@ public class NamuPageDTO {
         id += 1;
         this.name = name;
         this.next = new ArrayList<>();
-        this.prev = new ArrayList<>();
         this.nextIndex = 0;
-        this.prevIndex = 0;
     }
 
 
@@ -48,11 +43,6 @@ public class NamuPageDTO {
     public Boolean incrementNextIndex(){
         this.nextIndex++;
         return this.nextIndex != this.next.size();
-    }
-    public void incrementPrevIndex(){this.prevIndex++;}
-
-    public NamuPageDTO getFirstPrev() {
-        return this.prev.isEmpty() ? null : this.prev.get(0);
     }
 
 }

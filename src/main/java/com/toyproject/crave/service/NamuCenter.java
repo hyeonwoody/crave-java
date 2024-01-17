@@ -86,7 +86,7 @@ public class NamuCenter extends ThreadClass {
                 if (how.checkStage(config.getNumStage(), tmp.size())){
                     EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : ");
                     for (String element : tmp)
-                        EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : %s", element);
+                        EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 1, "Elements in foundRoute : %s", element);
                     finalResult.add(new LinkedList<>(tmp));
                     SseEmitters.send (this.port, String.join("->", tmp));
                 }

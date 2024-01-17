@@ -64,7 +64,6 @@ public class BackStep extends NamuStep {
 
     protected void insertPage(String result, String text) {
         NamuPageDTO namuPage = new NamuPageDTO(result);
-        currentTarget.prev.add(namuPage);
         namuPage.next.add(currentTarget);
     }
 
