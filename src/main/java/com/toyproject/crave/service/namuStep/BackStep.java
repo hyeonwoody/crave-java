@@ -14,6 +14,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BackStep extends NamuStep {
+
+    public static NamuStep Create() {return new BackStep();}
+
+    public BackStep(){
+        super("BackStep");
+    }
+
+
     public BackStep(ConfigDTO config) {
         super("FrontStep", config);
     }
@@ -60,6 +68,11 @@ public class BackStep extends NamuStep {
             }
         }
         return false;
+    }
+
+    @Override
+    protected void setCurrentTarget() {
+            this.currentTarget = new NamuPageDTO(this.config.getDestination());
     }
 
     protected void insertPage(String result, String text) {

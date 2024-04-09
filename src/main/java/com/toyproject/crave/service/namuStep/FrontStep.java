@@ -16,9 +16,16 @@ import java.util.regex.*; // searching for links
 
 public class FrontStep extends NamuStep {
 
+    public static NamuStep Create() {return new FrontStep();}
 
+    public FrontStep() {
+        super("FrontStep");
+    }
 
-
+    @Override
+    public void setCurrentTarget (){
+        this.currentTarget = new NamuPageDTO(this.config.getOrigin());
+    }
     public FrontStep(ConfigDTO config) {
         super("FrontStep", config);
         currentTarget = new NamuPageDTO(config.getOrigin());

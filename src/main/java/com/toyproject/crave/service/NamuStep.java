@@ -9,6 +9,7 @@ import com.toyproject.crave.service.method.Front;
 import com.toyproject.crave.service.scope.All;
 import com.toyproject.crave.service.scope.PersonOnly;
 import libs.ThreadClass;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +27,7 @@ public abstract class NamuStep extends ThreadClass{
 
     public NamuPageDTO currentTarget;
     public Map<String, String> historyMap;
-    public ArrayList<Deque<String>> foundRoute = new ArrayList<>();
+    public static ArrayList<Deque<String>> foundRoute = new ArrayList<>();
 
     @Setter
     protected ConfigDTO config;
@@ -35,7 +36,14 @@ public abstract class NamuStep extends ThreadClass{
     public Method method;
 
     private static int count = 0;
-
+    public NamuStep(){
+        super("UniverseStep");
+        count++;
+    }
+    public NamuStep (String stepMethod){
+        super(stepMethod);
+        count++;
+    }
 
     public NamuStep(String stepMethod, ConfigDTO config) {
         super(stepMethod);
@@ -50,6 +58,7 @@ public abstract class NamuStep extends ThreadClass{
     }
 
 
+    protected abstract void setCurrentTarget();
 
     protected abstract void insertPage (String result, String text);
     protected abstract Boolean processHtmlForResults(String html);
@@ -61,8 +70,6 @@ public abstract class NamuStep extends ThreadClass{
     }
     public String getHtml(String uri) throws UnsupportedEncodingException {
         try {
-
-
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(uri))
