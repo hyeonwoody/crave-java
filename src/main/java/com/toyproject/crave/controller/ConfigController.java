@@ -2,9 +2,8 @@
 package com.toyproject.crave.controller;
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toyproject.crave.service.NamuCenter;
+import com.toyproject.crave.service.ConfigService;
 import jakarta.servlet.http.HttpServletRequest;
-import libs.ThreadClass;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -83,10 +82,8 @@ public class ConfigController {
             config = objectMapper.readValue(requestBody, ConfigDTO.class);
 
             if (config.areMembersNotNull()){
-                NamuCenter namu = new NamuCenter(config);
-                ret = namu.getPort();
-                if (namu.startThread())
-                    namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);
+                ConfigService configService = new ConfigService();
+                ret = configService.startNamuCenter (config);
             }
             else {
                 ret = -2;

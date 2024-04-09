@@ -28,7 +28,7 @@ public abstract class NamuStep extends ThreadClass{
     public Map<String, String> historyMap;
     public ArrayList<Deque<String>> foundRoute = new ArrayList<>();
 
-
+    @Setter
     protected ConfigDTO config;
     public Scope scope;
     public Algorithm algorithm;
@@ -41,28 +41,8 @@ public abstract class NamuStep extends ThreadClass{
         super(stepMethod);
         this.config = config;
         count++;
-        this.historyMap = new HashMap<>();
-        if (this.config.getScope() == ConfigController.EScope.PERSONONLY.ordinal()){
-            scope = new PersonOnly();
-        } else if (this.config.getScope() == ConfigController.EScope.ALL.ordinal()) {
-            scope = new All();
-        }
-
-        if (this.config.getAlgorithm() == ConfigController.EAlgorithmType.BFS.ordinal()){
-            algorithm = new BFS();
-        }
-        else if(this.config.getAlgorithm() == ConfigController.EAlgorithmType.DFS.ordinal()){
-            algorithm = new DFS();
-        }
-
-        if (this.config.getMethod() == ConfigController.EMethodType.FRONT.ordinal()){
-            method = new Front();
-        }
-
-
-
     }
-    public long duration() {
+    public static long duration() {
         Random rand = new Random();
         long min = 900;
         long max = 1550;
@@ -96,4 +76,29 @@ public abstract class NamuStep extends ThreadClass{
         }
     }
 
+    protected void settings() {
+        this.historyMap = new HashMap<>();
+        if (this.config.getScope() == ConfigController.EScope.PERSONONLY.ordinal()){
+            scope = new PersonOnly();
+        } else if (this.config.getScope() == ConfigController.EScope.ALL.ordinal()) {
+            scope = new All();
+        }
+
+        if (this.config.getAlgorithm() == ConfigController.EAlgorithmType.BFS.ordinal()){
+            algorithm = new BFS();
+        }
+        else if(this.config.getAlgorithm() == ConfigController.EAlgorithmType.DFS.ordinal()){
+            algorithm = new DFS();
+        }
+
+        if (this.config.getMethod() == ConfigController.EMethodType.FRONT.ordinal()){
+            method = new Front();
+        }
+    }
+
+    public void init(ConfigDTO config) {
+        this.setConfig(config);
+        this.settings();
+        this.setCurrentTarget();
+    }
 }
