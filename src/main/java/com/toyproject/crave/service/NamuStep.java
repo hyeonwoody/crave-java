@@ -14,12 +14,9 @@ import lombok.Setter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public abstract class NamuStep extends ThreadClass{
@@ -27,7 +24,9 @@ public abstract class NamuStep extends ThreadClass{
 
     public NamuPageDTO currentTarget;
     public Map<String, String> historyMap;
-    public static ArrayList<Deque<String>> foundRoute = new ArrayList<>();
+    public static List<Deque<String>> foundRoute =
+            Collections.synchronizedList(new ArrayList<>());
+    
 
     @Setter
     protected ConfigDTO config;

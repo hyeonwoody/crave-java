@@ -56,7 +56,7 @@ public class FrontStep extends NamuStep {
     @Override
     protected void insertPage (String result, String text){
         if (resultIsDestionation(result)){
-            Deque<String> route = new ArrayDeque<>();
+            Deque<String> route;
             route = method.createRoute(currentTarget);
             route.addLast(result);
             foundRoute.add(route);
