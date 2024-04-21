@@ -1,10 +1,6 @@
-package com.toyproject.crave.service.algorithm;
+package com.toyproject.crave.service.namuStep.algorithm;
 
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
-
-import com.toyproject.crave.service.Algorithm;
-
-import java.util.LinkedList;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 

@@ -1,6 +1,4 @@
-package com.toyproject.crave.service.scope;
-
-import com.toyproject.crave.service.Scope;
+package com.toyproject.crave.service.namuStep.scope;
 
 public class All implements Scope {
     @Override

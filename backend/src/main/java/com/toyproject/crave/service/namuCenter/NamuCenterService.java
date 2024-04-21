@@ -1,11 +1,12 @@
-package com.toyproject.crave.service;
+package com.toyproject.crave.service.namuCenter;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.controller.ConfigController;
-import com.toyproject.crave.service.how.Exact;
-import com.toyproject.crave.service.how.Maximum;
-import com.toyproject.crave.service.how.Minimum;
-import com.toyproject.crave.service.how.None;
+import com.toyproject.crave.service.namuCenter.constraint.Constraint;
+import com.toyproject.crave.service.namuCenter.constraint.Exact;
+import com.toyproject.crave.service.namuCenter.constraint.Maximum;
+import com.toyproject.crave.service.namuCenter.constraint.Minimum;
+import com.toyproject.crave.service.namuCenter.constraint.None;
 import libs.EventManager;
 import libs.ThreadClass;
 import libs.sse.CustomSseEmitterList;
@@ -28,7 +29,7 @@ public class NamuCenterService extends ThreadClass {
     private ConfigDTO config;
 
     @Setter
-    private How how;
+    private Constraint constraint;
 
     private List<List<String>> finalResult = new ArrayList<>();
 
@@ -39,25 +40,25 @@ public class NamuCenterService extends ThreadClass {
     public NamuCenterService(ConfigDTO config, int port){
         super("NamuCenter");
         this.setConfig(config);
-        this.setHow();
+        this.setConstraint();
         this.setPort(port);
     }
     public NamuCenterService(){
         super("NamuCenter");
     }
 
-    private void setHow (){
+    private void setConstraint(){
         if (this.config.getHow() == ConfigController.EHowType.EXACT.ordinal()){
-            how = new Exact();
+            constraint = new Exact();
         }
         if (this.config.getHow() == ConfigController.EHowType.MINIMUM.ordinal()){
-            how = new Minimum();
+            constraint = new Minimum();
         }
         if (this.config.getHow() == ConfigController.EHowType.MAXIMUM.ordinal()){
-            how = new Maximum();
+            constraint = new Maximum();
         }
         if (this.config.getHow() == ConfigController.EHowType.NONE.ordinal()){
-            how = new None();
+            constraint = new None();
         }
     }
 
@@ -68,7 +69,7 @@ public class NamuCenterService extends ThreadClass {
         {
             if (!foundRoute.isEmpty()) {
                 Deque<String> tmp = new LinkedList<>(foundRoute.remove(0));
-                if (how.checkStage(config.getNumStage(), tmp.size())){
+                if (constraint.checkStage(config.getNumStage(), tmp.size())){
                     EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : ");
                     for (String element : tmp)
                         EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 1, "Elements in foundRoute : %s", element);

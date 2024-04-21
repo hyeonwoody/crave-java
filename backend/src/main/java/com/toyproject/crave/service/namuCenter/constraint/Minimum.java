@@ -1,7 +1,6 @@
-package com.toyproject.crave.service.how;
+package com.toyproject.crave.service.namuCenter.constraint;
 
-import com.toyproject.crave.service.How;
-public class Minimum implements How {
+public class Minimum implements Constraint {
 
     @Override
     public boolean checkStage(int stage, int currentStage) {

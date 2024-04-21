@@ -1,7 +1,8 @@
-package com.toyproject.crave.service.namuStep;
+package com.toyproject.crave.service.namuStep.method;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
+import com.toyproject.crave.service.namuStep.NamuStep;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

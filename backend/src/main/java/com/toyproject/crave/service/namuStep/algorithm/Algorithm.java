@@ -1,4 +1,4 @@
-package com.toyproject.crave.service;
+package com.toyproject.crave.service.namuStep.algorithm;
 
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 

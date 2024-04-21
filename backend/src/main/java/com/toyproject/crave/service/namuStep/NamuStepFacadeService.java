@@ -1,21 +1,14 @@
 package com.toyproject.crave.service.namuStep;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
-import com.toyproject.crave.controller.ConfigController;
-import com.toyproject.crave.service.How;
-import com.toyproject.crave.service.how.Exact;
-import com.toyproject.crave.service.how.Maximum;
-import com.toyproject.crave.service.how.Minimum;
-import com.toyproject.crave.service.how.None;
-import libs.EventManager;
+import com.toyproject.crave.service.namuCenter.constraint.Constraint;
+import com.toyproject.crave.service.namuStep.method.BackStepService;
+import com.toyproject.crave.service.namuStep.method.FrontStepService;
 import libs.ThreadClass;
-import libs.sse.CustomSseEmitterList;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
-
-import static com.toyproject.crave.service.namuStep.NamuStep.foundRoute;
 
 public class NamuStepFacadeService extends ThreadClass {
     private String origin;
@@ -47,7 +40,7 @@ public class NamuStepFacadeService extends ThreadClass {
         super ("NamuCenter");
         this.port = ++initPort;
     }
-    private How how;
+    private Constraint constraint;
 
 
 

@@ -1,8 +1,7 @@
-package com.toyproject.crave.service.method;
+package com.toyproject.crave.service.namuStep.method;
 
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 import com.toyproject.crave.controller.ConfigController;
-import com.toyproject.crave.service.Method;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

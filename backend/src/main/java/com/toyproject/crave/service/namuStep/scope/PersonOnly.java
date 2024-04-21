@@ -1,8 +1,5 @@
-package com.toyproject.crave.service.scope;
+package com.toyproject.crave.service.namuStep.scope;
 
-import com.toyproject.crave.service.Scope;
-
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
