@@ -2,7 +2,6 @@ package com.toyproject.crave.service.namuStep;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
-import com.toyproject.crave.service.NamuStep;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,16 +12,16 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BackStep extends NamuStep {
+public class BackStepService extends NamuStep {
 
-    public static NamuStep Create() {return new BackStep();}
+    public static NamuStep Create() {return new BackStepService();}
 
-    public BackStep(){
+    public BackStepService(){
         super("BackStep");
     }
 
 
-    public BackStep(ConfigDTO config) {
+    public BackStepService(ConfigDTO config) {
         super("FrontStep", config);
     }
 

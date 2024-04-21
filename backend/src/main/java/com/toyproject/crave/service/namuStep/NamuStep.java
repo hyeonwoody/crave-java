@@ -1,8 +1,11 @@
-package com.toyproject.crave.service;
+package com.toyproject.crave.service.namuStep;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 import com.toyproject.crave.controller.ConfigController;
+import com.toyproject.crave.service.Algorithm;
+import com.toyproject.crave.service.Method;
+import com.toyproject.crave.service.Scope;
 import com.toyproject.crave.service.algorithm.BFS;
 import com.toyproject.crave.service.algorithm.DFS;
 import com.toyproject.crave.service.method.Front;

@@ -1,4 +1,4 @@
-package com.toyproject.crave.service;
+package com.toyproject.crave.service.namuStep;
 
 import java.util.HashMap;
 import java.util.Map;

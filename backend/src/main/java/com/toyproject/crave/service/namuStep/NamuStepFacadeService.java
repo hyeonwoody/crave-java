@@ -1,13 +1,12 @@
-package com.toyproject.crave.service;
+package com.toyproject.crave.service.namuStep;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.controller.ConfigController;
+import com.toyproject.crave.service.How;
 import com.toyproject.crave.service.how.Exact;
 import com.toyproject.crave.service.how.Maximum;
 import com.toyproject.crave.service.how.Minimum;
 import com.toyproject.crave.service.how.None;
-import com.toyproject.crave.service.namuStep.BackStep;
-import com.toyproject.crave.service.namuStep.FrontStep;
 import libs.EventManager;
 import libs.ThreadClass;
 import libs.sse.CustomSseEmitterList;
@@ -16,9 +15,9 @@ import lombok.Setter;
 
 import java.util.*;
 
-import static com.toyproject.crave.service.NamuStep.foundRoute;
+import static com.toyproject.crave.service.namuStep.NamuStep.foundRoute;
 
-public class NamuCenter extends ThreadClass {
+public class NamuStepFacadeService extends ThreadClass {
     private String origin;
     private String destination;
 
@@ -34,8 +33,10 @@ public class NamuCenter extends ThreadClass {
 
     private List<List<String>> finalResult = new ArrayList<>();
 
+    private Map<String, NamuStep> namuSteps;
 
-    public NamuCenter (ConfigDTO config){
+
+    public NamuStepFacadeService(ConfigDTO config){
         super("NamuCenter");
         this.setConfig(config);
         this.setHow();
@@ -43,7 +44,7 @@ public class NamuCenter extends ThreadClass {
         this.port = ++initPort;
     }
 
-    public NamuCenter (){
+    public NamuStepFacadeService(){
         super ("NamuCenter");
         this.port = ++initPort;
     }
@@ -67,14 +68,14 @@ public class NamuCenter extends ThreadClass {
     public void createStep (){
         switch (this.config.getMethod()) {
             case 0: //FRONT
-                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
+                NamuStepFactory.RegisterStep("FrontStep", FrontStepService::Create);
                 break;
             case 1: //FRONT & BACK
-                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
-                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
+                NamuStepFactory.RegisterStep("FrontStep", FrontStepService::Create);
+                NamuStepFactory.RegisterStep("BackStep", BackStepService::Create);
                 break;
             case 2: //BACK
-                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
+                NamuStepFactory.RegisterStep("BackStep", BackStepService::Create);
                 break;
         }
     }
@@ -83,15 +84,16 @@ public class NamuCenter extends ThreadClass {
     @Override
     public void threadMain() {
         System.out.println("THread");
-        NamuStep universeStep = null;
         CustomSseEmitterList SseEmitters = new CustomSseEmitterList();
 
+        int i = 0;
         for (Map.Entry<String, NamuStepFactory.CreateCallback> entry : NamuStepFactory.mSteps.entrySet()) {
             NamuStep namuStep = entry.getValue().Create();
             namuStep.init(this.config);
             if (namuStep.startThread()){
                 namuStep.setMThreadStatus(EThreadStatus.THREAD_ACTIVE);
             }
+            namuSteps.put(entry.getKey(), namuStep);
         }
 
         while (getMThreadStatus() == EThreadStatus.THREAD_ACTIVE)

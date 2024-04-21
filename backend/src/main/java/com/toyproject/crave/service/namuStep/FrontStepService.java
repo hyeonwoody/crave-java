@@ -3,22 +3,20 @@ package com.toyproject.crave.service.namuStep;
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.DTO.Page.NamuPageDTO;
 import com.toyproject.crave.controller.ConfigController;
-import com.toyproject.crave.service.NamuStep;
 import libs.EventManager;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.regex.*; // searching for links
 
-public class FrontStep extends NamuStep {
+public class FrontStepService extends NamuStep {
 
-    public static NamuStep Create() {return new FrontStep();}
+    public static NamuStep Create() {return new FrontStepService();}
 
-    public FrontStep() {
+    public FrontStepService() {
         super("FrontStep");
     }
 
@@ -26,7 +24,7 @@ public class FrontStep extends NamuStep {
     public void setCurrentTarget (){
         this.currentTarget = new NamuPageDTO(this.config.getOrigin());
     }
-    public FrontStep(ConfigDTO config) {
+    public FrontStepService(ConfigDTO config) {
         super("FrontStep", config);
         currentTarget = new NamuPageDTO(config.getOrigin());
         currentTarget.setStage(0);
