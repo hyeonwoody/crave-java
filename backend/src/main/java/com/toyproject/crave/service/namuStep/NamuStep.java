@@ -49,7 +49,7 @@ public abstract class NamuStep extends ThreadClass{
 
     public NamuStep(String stepMethod, ConfigDTO config) {
         super(stepMethod);
-        this.config = config;
+        this.setConfig(config);
         count++;
     }
     public static long duration() {

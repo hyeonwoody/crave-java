@@ -31,7 +31,7 @@ public class NamuStepFacadeService extends ThreadClass {
     @Setter
     private ConfigDTO config;
 
-    private List<List<String>> finalResult = new ArrayList<>();
+
 
     private Map<String, NamuStep> namuSteps;
 
@@ -39,7 +39,6 @@ public class NamuStepFacadeService extends ThreadClass {
     public NamuStepFacadeService(ConfigDTO config){
         super("NamuCenter");
         this.setConfig(config);
-        this.setHow();
         this.createStep();
         this.port = ++initPort;
     }
@@ -50,20 +49,7 @@ public class NamuStepFacadeService extends ThreadClass {
     }
     private How how;
 
-    public void setHow (){
-        if (this.config.getHow() == ConfigController.EHowType.EXACT.ordinal()){
-            how = new Exact();
-        }
-        if (this.config.getHow() == ConfigController.EHowType.MINIMUM.ordinal()){
-            how = new Minimum();
-        }
-        if (this.config.getHow() == ConfigController.EHowType.MAXIMUM.ordinal()){
-            how = new Maximum();
-        }
-        if (this.config.getHow() == ConfigController.EHowType.NONE.ordinal()){
-            how = new None();
-        }
-    }
+
 
     public void createStep (){
         switch (this.config.getMethod()) {
@@ -84,7 +70,7 @@ public class NamuStepFacadeService extends ThreadClass {
     @Override
     public void threadMain() {
         System.out.println("THread");
-        CustomSseEmitterList SseEmitters = new CustomSseEmitterList();
+
 
         int i = 0;
         for (Map.Entry<String, NamuStepFactory.CreateCallback> entry : NamuStepFactory.mSteps.entrySet()) {
@@ -94,20 +80,6 @@ public class NamuStepFacadeService extends ThreadClass {
                 namuStep.setMThreadStatus(EThreadStatus.THREAD_ACTIVE);
             }
             namuSteps.put(entry.getKey(), namuStep);
-        }
-
-        while (getMThreadStatus() == EThreadStatus.THREAD_ACTIVE)
-        {
-            if (!foundRoute.isEmpty()) {
-                Deque<String> tmp = new LinkedList<>(foundRoute.remove(0));
-                if (how.checkStage(config.getNumStage(), tmp.size())){
-                    EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 0, "Elements in foundRoute : ");
-                    for (String element : tmp)
-                        EventManager.LogOutput(EventManager.LOG_LEVEL.INFO.ordinal(), mName, new Object(){}.getClass().getEnclosingMethod().getName(), 1, "Elements in foundRoute : %s", element);
-                    finalResult.add(new LinkedList<>(tmp));
-                    SseEmitters.send (this.port, String.join("->", tmp));
-                }
-            }
         }
     }
 }
