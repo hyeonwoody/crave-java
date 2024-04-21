@@ -47,7 +47,7 @@ Completed hirarchical class structures.
 
 ## 📖: Libraries Used
 >Tailwind CSS
-> 
+
 >Axios
 
 <br>

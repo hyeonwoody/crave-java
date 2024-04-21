@@ -34,6 +34,15 @@ public class NamuCenter extends ThreadClass {
 
     private List<List<String>> finalResult = new ArrayList<>();
 
+
+    public NamuCenter (ConfigDTO config){
+        super("NamuCenter");
+        this.setConfig(config);
+        this.setHow();
+        this.createStep();
+        this.port = ++initPort;
+    }
+
     public NamuCenter (){
         super ("NamuCenter");
         this.port = ++initPort;
@@ -52,6 +61,21 @@ public class NamuCenter extends ThreadClass {
         }
         if (this.config.getHow() == ConfigController.EHowType.NONE.ordinal()){
             how = new None();
+        }
+    }
+
+    public void createStep (){
+        switch (this.config.getMethod()) {
+            case 0: //FRONT
+                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
+                break;
+            case 1: //FRONT & BACK
+                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
+                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
+                break;
+            case 2: //BACK
+                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
+                break;
         }
     }
 
@@ -82,23 +106,6 @@ public class NamuCenter extends ThreadClass {
                     SseEmitters.send (this.port, String.join("->", tmp));
                 }
             }
-        }
-    }
-
-    public void init(ConfigDTO config) {
-        this.setConfig(config);
-        this.setHow();
-        switch (this.config.getMethod()) {
-            case 0: //FRONT
-                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
-                break;
-            case 1: //FRONT & BACK
-                NamuStepFactory.RegisterStep("FrontStep", FrontStep::Create);
-                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
-                break;
-            case 2: //BACK
-                NamuStepFactory.RegisterStep("BackStep", BackStep::Create);
-                break;
         }
     }
 }

@@ -10,15 +10,15 @@ public class ConfigDTO {
 
     @Getter
     @JsonProperty("inputScope")
-    private int scope;
+    private Integer scope;
 
     @Getter
     @JsonProperty("inputAlgorithm")
-    private int algorithm;
+    private Integer algorithm;
 
     @Getter
     @JsonProperty("inputMethod")
-    private int method;
+    private Integer method;
 
     @Getter
     @JsonProperty("inputOrigin")
@@ -30,11 +30,11 @@ public class ConfigDTO {
 
     @Getter
     @JsonProperty("inputHow")
-    private int how;
+    private Integer how;
 
     @Getter
     @JsonProperty("inputNumStage")
-    private int numStage;
+    private Integer numStage;
 
     @JsonIgnore
     private String inputDropDown;

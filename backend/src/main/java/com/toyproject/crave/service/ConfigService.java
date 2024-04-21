@@ -5,8 +5,7 @@ import libs.ThreadClass;
 
 public class ConfigService {
     public int startNamuCenter(ConfigDTO config) {
-        NamuCenter namu = new NamuCenter();
-        namu.init(config);
+        NamuCenter namu = new NamuCenter(config);
         int ret = namu.getPort();
         if (namu.startThread())
             namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);

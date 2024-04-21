@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+    --orange: #40d0f8;
+    --identity: #31abcd;
+    --white: #fff;
+
+    background: #ffffff;
+}
+
+.Container {
+    background: #31abcd;
+}
