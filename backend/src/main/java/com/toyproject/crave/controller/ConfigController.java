@@ -83,7 +83,7 @@ public class ConfigController {
 
             if (config.areMembersNotNull()){
                 ConfigService configService = new ConfigService();
-                ret = configService.startNamuFacade (config);
+                ret = configService.startNamuMediator(config);
                 if (ret != -2){
                     configService.startNamuCenter(config);
                 }

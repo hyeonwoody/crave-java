@@ -2,7 +2,7 @@ package com.toyproject.crave.service;
 
 import com.toyproject.crave.DTO.Config.ConfigDTO;
 import com.toyproject.crave.service.namuCenter.NamuCenterService;
-import com.toyproject.crave.service.namuStep.NamuStepFacadeService;
+import com.toyproject.crave.service.namuStep.NamuStepFactoryConsumer;
 import libs.ThreadClass;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +13,8 @@ public class ConfigService {
     @Setter
     private int port;
 
-    public int startNamuFacade (ConfigDTO config){
-        NamuStepFacadeService namu = new NamuStepFacadeService(config);
+    public int startNamuMediator(ConfigDTO config){
+        NamuStepFactoryConsumer namu = new NamuStepFactoryConsumer(config);
         this.setPort(namu.getPort());
         if (namu.startThread())
             namu.setMThreadStatus(ThreadClass.EThreadStatus.THREAD_ACTIVE);

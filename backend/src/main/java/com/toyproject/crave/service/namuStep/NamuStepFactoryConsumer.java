@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import java.util.*;
 
-public class NamuStepFacadeService extends ThreadClass {
+public class NamuStepFactoryConsumer extends ThreadClass {
     private String origin;
     private String destination;
 
@@ -29,14 +29,14 @@ public class NamuStepFacadeService extends ThreadClass {
     private Map<String, NamuStep> namuSteps;
 
 
-    public NamuStepFacadeService(ConfigDTO config){
+    public NamuStepFactoryConsumer(ConfigDTO config){
         super("NamuCenter");
         this.setConfig(config);
         this.createStep();
         this.port = ++initPort;
     }
 
-    public NamuStepFacadeService(){
+    public NamuStepFactoryConsumer(){
         super ("NamuCenter");
         this.port = ++initPort;
     }
