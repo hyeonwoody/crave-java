@@ -19,6 +19,7 @@ configurations {
 
 bootJar {
 	enabled = false
+	mainClassName = "com.yourpackage.CraveApplication"
 }
 
 jar {
