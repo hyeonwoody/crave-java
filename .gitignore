@@ -4,6 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+!/backend/build.gradle
 
 ### STS ###
 .apt_generated
@@ -45,6 +46,7 @@ out/
 
 ### Various properties ###
 *.properties
+!/backend/gradle/wrapper/gradle-wrapper.properties
 
 /src/main/frontend/tsconfig.json
 
