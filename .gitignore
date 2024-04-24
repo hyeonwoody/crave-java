@@ -57,5 +57,6 @@ out/
 
 ### special scripts
 scripts/*
+!scripts/jenkins.sh
 app.sh
 react.log
