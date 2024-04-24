@@ -5,12 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: triggerjenkinsjob
-        uses: mickeygoussetorg/trigger-jenkins-job@v1
-        with:
-          jenkins-server:  "${{ secrets.JENKINS_URL }}" # URL of the jenkins server. ex: http://myjenkins.acme.com:8080
-          jenkins-job: ${{ secrets.JENKINS_JOB }} # The name of the jenkins job to run
-          jenkins-username: ${{ secrets.JENKINS_USER }} # user name for accessing jenkins
-          jenkins-pat: ${{ secrets.JENKINS_API_TOKEN }} # personal Access token for accessing Jenkins
-          poll-time: 10 # how often (seconds) to poll the jenkins server for results
-          timeout-value: 600 # How long (seconds) to poll before timing out the action
-          verbose: true # true/false - turns on extra logging
+        run: mickeygoussetorg/trigger-jenkins-job@v1
+        curl -X POST curl -I -u auto:${{secret.JENKINS_API_TOKEN}} ${{secret.JENKINS_URL}}/job/${{secret.JENKINS_JOB}}/build?token=${{secret.JENKINS_JOB_TOKEN}}\
