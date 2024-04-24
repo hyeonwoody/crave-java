@@ -4,6 +4,7 @@ jobs:
   trigger-a-jenkins-job:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Give Permission
         run: chmod +x -R .
       - name: Run Scripts
