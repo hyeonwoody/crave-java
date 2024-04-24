@@ -4,5 +4,5 @@ jobs:
   trigger-a-jenkins-job:
     runs-on: ubuntu-latest
     steps:
-      - id: trigger jenkins job
+      - id: triggerJenkinsJob
         run: curl -X POST curl -I -u auto:${{ secrets.JENKINS_API_TOKEN }} ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}
