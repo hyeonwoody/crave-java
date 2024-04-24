@@ -1,6 +1,6 @@
-API_TOKEN=$1
-URL=$2
-JOB=$3
-JOB_TOKEN=$4
+JENKINS_API_TOKEN=$1
+JENKINS_URL=$2
+JENKINS_JOB=$3
+JENKINS_JOB_TOKEN=$4
 
-curl -X POST curl -I -u auto:${API_TOKEN} ${URL}/job/${JOB}/build?token=${JOB_TOKEN}
+curl -X POST curl -I -u auto:${JENKINS_API_TOKEN} ${JENKINS_URL}/job/${JENKINS_JOB}/build?token=${JENKINS_JOB_TOKEN}
