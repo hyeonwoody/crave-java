@@ -5,5 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: triggerjenkinsjob
-        run: mickeygoussetorg/trigger-jenkins-job@v1
-        curl -X POST curl -I -u auto:${{secret.JENKINS_API_TOKEN}} ${{secret.JENKINS_URL}}/job/${{secret.JENKINS_JOB}}/build?token=${{secret.JENKINS_JOB_TOKEN}}\
+        run: curl -X POST curl -I -u auto:${{secret.JENKINS_API_TOKEN}} ${{secret.JENKINS_URL}}/job/${{secret.JENKINS_JOB}}/build?token=${{secret.JENKINS_JOB_TOKEN}}\
