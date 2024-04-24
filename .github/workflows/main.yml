@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: triggerjenkinsjob
-        name: Give Permission
+      - name: Give Permission
         run: chmod +x -R .
-        name: Run Scripts
+      - name: Run Scripts
         run: ./scripts/jenkins.sh ${{ secrets.JENKINS_API_TOKEN }} ${{ secrets.JENKINS_URL }} ${{ secrets.JENKINS_JOB }} ${{ secrets.JENKINS_JOB_TOKEN }}
