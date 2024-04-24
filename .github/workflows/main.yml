@@ -5,4 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: triggerJenkinsJob
-        run: curl -X POST curl -I -u auto:${{ secrets.JENKINS_API_TOKEN }} ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}
+        #run: curl -X POST curl -I -u auto:${{ secrets.JENKINS_API_TOKEN }} ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}
+        run: curl -vk --user : ${{ secrets.JENKINS_API_TOKEN }} "${{ secrets.JENKINS_URL }}/buildByToken/buildWithParameters?" --data "token=${{ secrets.JENKINS_JOB_TOKEN }}" --data "job=${{ secrets.JENKINS_JOB }}"
