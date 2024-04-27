@@ -1,4 +1,4 @@
-name: trigger jenkins job
+name: trigger AWS jenkins job
 on: [push]
 jobs:
   trigger-a-jenkins-job:
